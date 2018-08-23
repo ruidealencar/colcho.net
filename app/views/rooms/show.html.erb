@@ -1,0 +1,17 @@
+<p>
+  <strong>Título:</strong>
+  <%= @room.title %>
+</p>
+
+<p>
+  <strong>Localização:</strong>
+  <%= @room.location %>
+</p>
+
+<p>
+  <strong>Descrição:</strong>
+  <%= @room.description %>
+</p>
+
+<%= link_to 'Editar', edit_room_path(@room) %> |
+<%= link_to 'Voltar', rooms_path %>

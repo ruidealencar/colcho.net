@@ -1,0 +1,8 @@
+<h1>Perfil: <%= @user.full_name %></h1>
+
+<ul>
+  <li>Localização: <%= @user.location %>
+  <li>Bio: <%= @user.bio %>
+</ul>
+
+<%= link_to 'Editar Perfil', edit_user_path(@user) %>
