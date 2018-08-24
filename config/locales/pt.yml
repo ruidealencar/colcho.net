@@ -1,19 +1,6 @@
 pt:
   activerecord:
     models:
-      user: Usuário
-    attributes:
-      user:
-        bio: Biografia
-        email: Email
-        full_name: Nome completo
-        location: Localização
-        password: Senha
-        password_confirmation: Confirme sua senha
-
-pt:
-  activerecord:
-    models:
       room: Quarto
       user: Usuário
     attributes:
@@ -28,4 +15,19 @@ pt:
         description: Descrição
         location: Localização
         title: Título
+  signup:
+    confirm_email:
+      subject: 'Colcho.net - Confirme seu email'
+      title: 'Seja bem vindo ao Colcho.net!'
+      body: |
+          Seja bem vindo ao Colcho.net, %{full_name}.
+          O Colcho.net é o lugar ideal para você alugar aquele
+          quarto sobrando na sua casa e ainda conhecer gente do
+          mundo inteiro.
+      confirm_link_html: 'Para você começar a usar o site,
+              acesse o
+              link: %{link}'
+      thanks_html: 'Obrigado por se cadastrar no %{link}.'
+  confirmations:
+    success: Email confirmado com sucesso, obrigado!
 

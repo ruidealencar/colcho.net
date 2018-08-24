@@ -11,6 +11,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      Signup.confirm_email(@user).deliver
+      
       redirect_to @user, notice: 'Cadastro criado com sucesso!'
     else
       render action: :new
