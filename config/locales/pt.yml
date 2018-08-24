@@ -15,6 +15,27 @@ pt:
         description: Descrição
         location: Localização
         title: Título
+      show:
+        edit: 'Editar perfil'
+        title: "Perfil: %{user_name}"
+        location: "Localização: %{location}"
+        bio: "Bio: %{bio}"
+  activemodel:
+    attributes:
+      user_session:
+        email: Email
+        password: Senha
+    errors:
+      messages:
+        invalid_login: 'Usuário ou senha inválidos'
+  helpers:
+    submit:
+      user_session:
+      create: 'Entrar'
+  user_sessions:
+    new:
+      title: 'Login'
+      sign_up: 'Cadastre-se'
   signup:
     confirm_email:
       subject: 'Colcho.net - Confirme seu email'
@@ -30,4 +51,5 @@ pt:
       thanks_html: 'Obrigado por se cadastrar no %{link}.'
   confirmations:
     success: Email confirmado com sucesso, obrigado!
+  
 
