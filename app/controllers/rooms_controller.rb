@@ -5,6 +5,7 @@ class RoomsController < ApplicationController
   # GET /rooms.json
   def index
     @rooms = Room.all
+    @session = UserSession.new(session)
   end
 
   # GET /rooms/1

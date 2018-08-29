@@ -15,14 +15,13 @@
   <header>
     <div id="header-wrap">
       <h1><%= link_to "colcho.net", root_path %> </h1>
-      <nav>
-        <ul>
-          <li><%= link_to "Quartos", rooms_path %> </li>
-          <li><%= link_to "Cadastro", new_user_path %> </li>
-        </ul>
-      </nav>
-      </div>
-    </header>
+      <% if user_signed_in? %>
+        <%= render 'layouts/user_navbar' %>
+      <% else %>
+        <%= render 'layouts/visitor_navbar' %>
+      <% end %>
+    </div>
+  </header>
 
     <div id="content">
       <% if notice.present? %>

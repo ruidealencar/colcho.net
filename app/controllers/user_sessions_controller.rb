@@ -14,17 +14,18 @@ class UserSessionsController < ApplicationController
   end
 
   def destroy
-    # Ainda não :-)
+    user_session.destroy
+    redirect_to root_path, notice: t('flash.notice.signed_out')
   end
-end
 
-def authenticate!
+  def authenticate!
   user = User.authenticate(@email, @password)
 
-  if user.present?
-    store(user)
-  else
-    errors.add(:base, :invalid_login)
-    false
+    if user.present?
+      store(user)
+    else
+      errors.add(:base, :invalid_login)
+      false
+    end
   end
 end
