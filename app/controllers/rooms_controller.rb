@@ -1,75 +1,65 @@
 class RoomsController < ApplicationController
-  before_action :set_room, only: [:show, :edit, :update, :destroy]
 
-  # GET /rooms
-  # GET /rooms.json
+  before_action :set_room, only: [:show, :edit, :update, :destroy]
+  before_action :set_users_room, only: [:edit, :update, :destroy]
+
+  before_action :require_authentication, only: [:new, :edit, :create, :update, :destory]
+
   def index
-    @rooms = Room.all
-    @session = UserSession.new(session)
+    # O método #map, de coleções, retornará um novo Array
+    # contendo o resultado do bloco. Dessa forma, para cada
+    # quarto, retornaremos o presenter equivalente.
+    raise Room.all.inspect
+    @rooms = Room.most_recent.map do |room|
+      # Não exibiremos o formulário na listagem
+      RoomPresenter.new(room, self, false)
+    end
   end
 
-  # GET /rooms/1
-  # GET /rooms/1.json
   def show
   end
 
-  # GET /rooms/new
   def new
-    @room = Room.new
+    @room = current_user.rooms.build
   end
 
-  # GET /rooms/1/edit
   def edit
   end
 
-  # POST /rooms
-  # POST /rooms.json
   def create
-    @room = Room.new(room_params)
+    @room = current_user.rooms.build(room_params)
 
-    respond_to do |format|
-      if @room.save
-        format.html { redirect_to @room, notice: 'Room was successfully created.' }
-        format.json { render :show, status: :created, location: @room }
-      else
-        format.html { render :new }
-        format.json { render json: @room.errors, status: :unprocessable_entity }
-      end
+    if @room.save
+      redirect_to @room, notice: t('flash.notice.room_created')
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /rooms/1
-  # PATCH/PUT /rooms/1.json
   def update
-    respond_to do |format|
       if @room.update(room_params)
-        format.html { redirect_to @room, notice: 'Room was successfully updated.' }
-        format.json { render :show, status: :ok, location: @room }
+        redirect_to @room, notice: t('flash.notice.room_updated')
       else
-        format.html { render :edit }
-        format.json { render json: @room.errors, status: :unprocessable_entity }
+        render :edit
       end
-    end
   end
 
-  # DELETE /rooms/1
-  # DELETE /rooms/1.json
   def destroy
     @room.destroy
-    respond_to do |format|
-      format.html { redirect_to rooms_url, notice: 'Room was successfully destroyed.' }
-      format.json { head :no_content }
+      redirect_to rooms_url
     end
-  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_room
-      @room = Room.find(params[:id])
-    end
+  def set_room
+    room_model = Room.find(params[:id])
+    @room = RoomPresenter.new(room_model, self)
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def room_params
-      params.require(:room).permit(:title, :location, :description)
-    end
+  def set_users_room
+    @room = current_user.rooms.find(params[:id])
+  end
+
+  def room_params
+    params.require(:room).permit(:title, :location, :description)
+  end  
 end
